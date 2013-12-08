@@ -1,8 +1,52 @@
 ﻿<Window x:Class="Sudoku.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MainWindow" Height="400" Width="525">
+    
+    <Window.Resources>
         
+        <DataTemplate x:Key="BigRowTemplate">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource SquareTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="SquareTemplate">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource SmallRowTemplate}" Margin="5">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+            
+        <DataTemplate x:Key="SmallRowTemplate">
+            <ItemsControl ItemsSource="{Binding}" ItemTemplate="{DynamicResource CellTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="CellTemplate">
+            <Button Content="{Binding Content}" Height="40" Width="40" Click="Button_Click"/>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Game level:"/>
+                <Label Content="{Binding Dificulty}"/>
+            </StackPanel>
+            <ItemsControl x:Name="SudokuGrid" ItemTemplate="{DynamicResource BigRowTemplate}"/>
+        </StackPanel>
     </Grid>
 </Window>
